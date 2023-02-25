@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.css">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TagSearch</title>
+</head>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+
+    html {
+        margin: 0;
+        height: 100%;
+    }
+
+    body {
+        height: 90%;
+        background-image: linear-gradient(60deg, #64b3f4 0%, #c2e59c 100%);
+        background-size: auto;
+        background-repeat: no-repeat;
+    }
+
+    #initialGrid {
+        margin-top: 100px;
+        display: block;
+        align-items: center;
+        text-align: center;
+        height: 100%;
+        width: 100%;
+        justify-content: center;
+    }
+
+    #centerGrid {
+        display: block;
+        margin: auto;
+        width: 50%;
+        height: 50%;
+        padding: 100px;
+        color: white;
+        align-items: center;
+        text-align: center;
+        justify-content: center;
+    }
+
+    #mainHeader {
+        font-family: 'Poppins', sans-serif;
+        font-size: 60px;
+    }
+    
+    p {
+        font-size: 20px;
+        font-family: 'Poppins', sans-serif;
+    }
+    
+    #searchBar {
+        margin-top: 20px;
+        border: 1px black;
+        border-radius: 10px 10px 10px 10px;
+        width: 50%;
+        height: 40px;
+        text-align: center;
+        font-size: 25px;
+        resize: none;
+        overflow: hidden;
+        outline: none;
+        font-family: 'Poppins', sans-serif;
+    }
+
+    #buttonCall {
+        color: red;
+    }
+
+    #searchBar {
+        display: block;
+    }
+
+    /* #searchBar:focus, #searchBar:hover {
+        font-size: 25px;
+        height: 40px;
+        transition: all 0.3s ease-in-out;
+    } */
+</style>
+<body>
+    <div id="intialGrid">
+        <div id="centerGrid">
+            <h1 id="mainHeader">TagSearch</h1>
+            <p>Search for any tags in the following platforms:</p>
+            <!--<i class="fa-brands fa-youtube"></i>-->
+            <textarea id="searchBar" placeholder="Search for..."></textarea>
+            <button id="buttonCall">Search</button>
+            <div id="tagsShow">
+                <p id="tagsList"></p>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript" async="true">
+        const reqButton = document.getElementById("buttonCall");
+
+        reqButton.addEventListener("click", async () => {
+            const query = document.getElementById("searchBar").value
+            const tagList = document.getElementById("tagsList")
+            console.log(query)
+            tags = await fetch(`/api/yt/${query}`, { method: "POST" })
+            tagList.innerHTML = await tags.text()
+        })
+    </script>
+</body>
+</html>
